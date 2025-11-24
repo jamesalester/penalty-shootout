@@ -1,12 +1,17 @@
 import { useDrag } from "@use-gesture/react";
 import type { FC } from "react";
 import { Vector3 } from "three";
+import useGameReset from "@/hooks/useGameReset";
 import useKickStateStore from "@/hooks/useKickStateStore";
 
 const KICK_FORCE = 0.0005;
 
 const KickDetector: FC = () => {
   const setKickVector = useKickStateStore((state) => state.setKickVector);
+
+  useGameReset(() => {
+    setKickVector(new Vector3(0, 0, 0));
+  });
 
   const bind = useDrag((state) => {
     if (state.last) {

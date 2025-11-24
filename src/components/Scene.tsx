@@ -7,8 +7,18 @@ import Ball from "@/components/Ball";
 import Goal from "@/components/Goal";
 import KickDetector from "@/components/KickDetector";
 import Pitch from "@/components/Pitch";
+import useGameStateStore from "@/hooks/useGameStateStore";
 
 const Scene: FC = () => {
+  const resetGame = useGameStateStore((state) => state.resetGame);
+
+  const onGoal = () => {
+    console.log("Goal scored!");
+    setTimeout(() => {
+      resetGame();
+    }, 2000);
+  }
+
   return (
     <>
       <Canvas
@@ -32,13 +42,21 @@ const Scene: FC = () => {
         <group position={[0, -1, 0]}>
           <Physics>
             <Pitch />
-            <Goal />
+            <Goal onGoal={onGoal} />
             <Ball />
           </Physics>
         </group>
       </Canvas>
 
       <KickDetector />
+
+      <button
+        type="button"
+        className="absolute bottom-4 right-4 -translate-x-1/2 rounded bg-background px-4 py-2 shadow-lg"
+        onClick={resetGame}
+      >
+        Reset Game
+      </button>
     </>
   );
 };
