@@ -24,7 +24,7 @@ const Ball: FC = () => {
     };
 
     // Only apply impulse if there's actual force
-    if (kickVector.length() > 0) kickBall(kickVector);
+    if (kickVector.length() > 0) setTimeout(() => kickBall(kickVector), 840);
   }, [kickVector]);
 
   return (
